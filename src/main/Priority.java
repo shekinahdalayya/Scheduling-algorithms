@@ -16,7 +16,9 @@ public class Priority {
 
 		Scanner s = new Scanner(System.in);
 
-		int x,n,p[],pp[],bt[],w[],t[], at[],awt,atat,i;
+		int x,n,p[],pp[],bt[],w[],t[], at[],i;
+		float awt=0; 
+		float atat=0;
 		System.out.print("Enter the number of process:");
 		n = s.nextInt();
 		
