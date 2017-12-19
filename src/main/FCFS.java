@@ -34,7 +34,7 @@ class FCFS
 			System.out.println("Process["+i+"]"); 
 			bt[i]=Integer.parseInt(br.readLine()); 
 		} 
-		System.out.println("\n\nEnter Arrival Time"); 
+		System.out.println("\n\nEnter Around Time"); 
 		for(int i=0;i<n;i++) 
 		{ 
 			System.out.println("Process["+i+"]"); 

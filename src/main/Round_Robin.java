@@ -13,7 +13,6 @@ class Round_Robin
 		int wt[]=new int[n];
 		int tat[]=new int[n];
 		int a[]=new int[n];
-		int at[]=new int[n];
 		System.out.println("Burst Time");
 		for(i=0;i<n;i++)
 		{
@@ -22,12 +21,6 @@ class Round_Robin
 		}
 		System.out.println("Enter Time quantum:");
 		q=Integer.parseInt(in.readLine());
-		System.out.println("\n\nEnter Arrival Time"); 
-		for(int g=0;g<n;g++) 
-		{ 
-			System.out.println("Process["+g+"]"); 
-			at[g]=Integer.parseInt(in.readLine()); 
-		} 
 		for(i=0;i<n;i++)
 			a[i]=bt[i];
 		for(i=0;i<n;i++)
@@ -43,7 +36,6 @@ class Round_Robin
 					{
 						if((j!=i)&&(bt[j]!=0))
 							wt[j]+=q;
-						wt[i]=wt[i]-at[i]; 
 					}
 				}
 				else
@@ -51,8 +43,7 @@ class Round_Robin
 					for(j=0;j<n;j++)
 					{
 						if((j!=i)&&(bt[j]!=0))
-							wt[j]+=bt[i];
-						wt[i]=wt[i]-at[i]; 
+							wt[j]+=bt[i]; 
 					}
 					bt[i]=0;
 				}

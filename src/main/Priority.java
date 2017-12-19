@@ -16,7 +16,7 @@ public class Priority {
 
 		Scanner s = new Scanner(System.in);
 
-		int x,n,p[],pp[],bt[],w[],t[], at[],i;
+		int x,n,p[],pp[],bt[],w[],t[], i;
 		float awt=0; 
 		float atat=0;
 		System.out.print("Enter the number of process:");
@@ -27,33 +27,25 @@ public class Priority {
 		bt = new int[n];
 		w = new int[n];
 		t = new int[n];
-		at = new int[n];
 
 
-		System.out.print("\n\t Enter burst time : time priorities \n");
+		System.out.print("\nEnter burst time\n");
 
 		for(i=0;i<n;i++)
 		{
 			System.out.print("\nProcess["+(i+1)+"]:");
 			bt[i] = s.nextInt();
-			pp[i] = s.nextInt();
 			p[i]=i+1;
 		}
 		
-		/*System.out.print("\n\t Enter time priorities \n");
+		System.out.print("\nEnter time priorities\n");
 
 		for(i=0;i<n;i++)
 		{
-			System.out.print("\nProcess["+(i+1)+"]:");
+			System.out.print("\nProcess["+(i+1)+"] with burst time-"+ bt[i] +":");
 			pp[i] = s.nextInt();
 			p[i]=i+1;
-		}*/
-		System.out.println("\n\nEnter Arrival Time"); 
-		for(int j=0;j<n;j++) 
-		{ 
-			System.out.println("Process["+j+"]"); 
-			at[j]=s.nextInt(); 
-		} 
+		}
 
 		//sorting on the basis of priority
 		for(i=0;i<n-1;i++)
@@ -81,7 +73,6 @@ public class Priority {
 		for(i=1;i<n;i++)
 		{
 			w[i]=t[i-1];
-			w[i]=w[i]-at[i]; 
 			awt+=w[i];
 			t[i]=w[i]+bt[i];
 			atat+=t[i];

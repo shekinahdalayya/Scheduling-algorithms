@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 class SJF{
 	public static void main(String args[]){
-		int burst_time[],process[],waiting_time[],at[],tat[],i,j,n,total=0,pos,temp;
+		int burst_time[],process[],waiting_time[],tat[],i,j,n,total=0,pos,temp;
 		float wait_avg,TAT_avg;
 		Scanner s = new Scanner(System.in);
 
@@ -15,7 +15,6 @@ class SJF{
 		burst_time = new int[n];
 		waiting_time = new int[n];
 		tat = new int[n];
-		at = new int[n];
 
 		System.out.println("\nEnter Burst time:");
 		for(i=0;i<n;i++)
@@ -24,12 +23,6 @@ class SJF{
 			burst_time[i] = s.nextInt();;
 			process[i]=i+1; //Process Number
 		}
-		System.out.println("\n\nEnter Arrival Time"); 
-		for(int k=0;k<n;k++) 
-		{ 
-			System.out.println("Process["+k+"]"); 
-			at[k]=s.nextInt();
-		} 
 		//Sorting
 		for(i=0;i<n;i++)
 		{
@@ -57,7 +50,6 @@ class SJF{
 		for(i=1;i<n;i++)
 		{
 			waiting_time[i]=0;
-			waiting_time[i]=waiting_time[i]-at[i]; 
 			for(j=0;j<i;j++)
 				waiting_time[i]+=burst_time[j];
 
