@@ -10,7 +10,7 @@ public class Priority {
 		//pp is process priority
 		//bt is process burst time
 		//w is wait time
-		// t is turnaround time
+		//t is turnaround time
 		//awt is average waiting time
 		//atat is average turnaround time
 
@@ -19,6 +19,7 @@ public class Priority {
 		int x,n,p[],pp[],bt[],w[],t[], i;
 		float awt=0; 
 		float atat=0;
+		
 		System.out.print("Enter the number of process:");
 		n = s.nextInt();
 		
@@ -66,6 +67,8 @@ public class Priority {
 				}
 			}
 		}
+		
+		////Waiting time for the process with highest priority is 0
 		w[0]=0;
 		awt=0;
 		t[0]=bt[0];
@@ -79,10 +82,11 @@ public class Priority {
 		}
 
 		//Displaying the process
-
 		System.out.print("\n\nProcess \t Burst Time \t Wait Time \t Turn Around Time   Priority \n");
 		for(i=0;i<n;i++)
 			System.out.print("\n   "+p[i]+"\t\t   "+bt[i]+"\t\t     "+w[i]+"\t\t     "+t[i]+"\t\t     "+pp[i]+"\n");
+		
+		//average of total waiting time and total turnaround time
 		awt/=n;
 		atat/=n;
 		System.out.print("\n Average Wait Time : "+awt);

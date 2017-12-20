@@ -1,3 +1,5 @@
+//SJF's code is from
+//http://tutorialheap.com/java-program-shortest-job-first-scheduling-algorithm/
 package main;
 import java.util.Scanner;
 
@@ -5,7 +7,6 @@ public class Process {
 
 	public static void main(String args[]) {
 		//n is number of processes
-		//at is arrival time
 		//bt is burst time
 		//wt is waiting time
 		//t is turn around time
@@ -36,22 +37,21 @@ public class Process {
 		wt[0]=0; 
 		btt = bt.clone();
 
-		System.out.println("\nThe results for Priority");
-		Priority(n, bt, wt, t);
-
-		bt=btt.clone();
-		System.out.println("\n\nThe results for Round Robin");
-		RoundRobin(n, bt, wt, t);
-
-		bt=btt.clone();
+		
 		System.out.println("\n\nThe results for First In First Out");
 		FCFS(n, bt, wt, t);
 
 		bt=btt.clone();
-		System.out.println("\n\nThe results for Short Job First");
+		System.out.println("\n\nThe results for Shortest Job First");
 		SJF(n, bt, wt, t, p);
 
-
+		bt=btt.clone();
+		System.out.println("\n\nThe results for Round Robin");
+		RoundRobin(n, bt, wt, t);
+		
+		bt=btt.clone();
+		System.out.println("\nThe results for Priority");
+		Priority(n, bt, wt, t);
 
 	}
 	public static void Priority(int n,int bt[], int wt[], int t[]){
@@ -65,7 +65,7 @@ public class Process {
 		System.out.println("Enter priority:");
 		for(int i=0;i<n;i++)
 		{
-			System.out.print("\nProcess["+(i+1)+"]:");
+			System.out.print("\nProcess["+(i+1)+"] with burst time-"+ bt[i] +":");
 			pp[i] = s.nextInt();
 			p[i]=i+1;
 		}

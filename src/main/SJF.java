@@ -1,78 +1,106 @@
-//http://tutorialheap.com/java-program-shortest-job-first-scheduling-algorithm/
+//http://campuscoke.blogspot.my/2015/01/shortest-remaining-time-first-srtf-cpu.html
+//This code has been modified
 package main;
-import java.util.Scanner;
+import java.io.*;
 
 class SJF{
-	public static void main(String args[]){
-		int burst_time[],process[],waiting_time[],tat[],i,j,n,total=0,pos,temp;
-		float wait_avg,TAT_avg;
-		Scanner s = new Scanner(System.in);
-
-		System.out.print("Enter number of process: ");
-		n = s.nextInt();
-
-		process = new int[n];
-		burst_time = new int[n];
-		waiting_time = new int[n];
-		tat = new int[n];
-
-		System.out.println("\nEnter Burst time:");
-		for(i=0;i<n;i++)
+	public static void main(String args[]) throws IOException
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		//number of processes
+		int n;
+		
+		System.out.println("Please enter the number of Processes: ");
+		n = Integer.parseInt(br.readLine());
+		
+		int proc[][] = new int[n + 1][4];//proc[][0] is the AT array,[][1] - RT,[][2] - WT,[][3] - TT
+		
+		System.out.println("Please enter the Burst Time");
+		for(int i = 1; i <= n; i++)
 		{
-			System.out.print("\nProcess["+(i+1)+"]: ");
-			burst_time[i] = s.nextInt();;
-			process[i]=i+1; //Process Number
+			System.out.println("Process " + i + ": ");
+			proc[i][1] = Integer.parseInt(br.readLine());
 		}
-		//Sorting
-		for(i=0;i<n;i++)
+		
+		System.out.println("Please enter the Arrival Time");
+		for(int i = 1; i <= n; i++)
 		{
-			pos=i;
-			for(j=i+1;j<n;j++)
+			System.out.println("Process " + i + " with burst time " + proc[i][1]+": ");
+			proc[i][0] = Integer.parseInt(br.readLine());
+		}
+		System.out.println();
+
+		//Calculation of Total Time
+		int total_time = 0;
+		for(int i = 1; i <= n; i++)
+		{
+			total_time += proc[i][1];
+		}
+
+		for(int i = 0; i < total_time; i++)
+		{
+			//Selection of shortest process which has arrived
+			int sel_proc = 0;
+			int min = 99999;
+			for(int j = 1; j <= n; j++)
 			{
-				if(burst_time[j]<burst_time[pos])
-					pos=j;
+				if(proc[j][0] <= i)//Condition to check if Process has arrived
+				{
+					if(proc[j][1] < min && proc[j][1] != 0)
+					{
+						min = proc[j][1];
+						sel_proc = j;
+					}
+				}
 			}
 
-			temp=burst_time[i];
-			burst_time[i]=burst_time[pos];
-			burst_time[pos]=temp;
 
-			temp=process[i];
-			process[i]=process[pos];
-			process[pos]=temp;
+			//Decrement Remaining Time of selected process by 1 since it has been assigned the CPU for 1 unit of time
+			proc[sel_proc][1]--;
+
+			//WT and TT Calculation
+			for(int j = 1; j <= n; j++)
+			{
+				if(proc[j][0] <= i)
+				{
+					if(proc[j][1] != 0)
+					{
+						proc[j][3]++;//If process has arrived and it has not already completed execution its TT is incremented by 1
+						if(j != sel_proc)//If the process has not been currently assigned the CPU and has arrived its WT is incremented by 1
+							proc[j][2]++;
+					}
+					else if(j == sel_proc)//This is a special case in which the process has been assigned CPU and has completed its execution
+						proc[j][3]++;
+				}
+			}
+
+
 		}
+		System.out.println();
+		System.out.println();
 
-
-
-		//First process has 0 waiting time
-		waiting_time[0]=0;
-		//calculate waiting time
-		for(i=1;i<n;i++)
+		//Printing the WT and TT for each Process
+		System.out.println("Process\t Arrival Time \t Waiting Time \t Turnaround Time ");
+		for(int i = 1; i <= n; i++)
 		{
-			waiting_time[i]=0;
-			for(j=0;j<i;j++)
-				waiting_time[i]+=burst_time[j];
-
-			total+=waiting_time[i];
+			System.out.printf(i+ "\t\t"+ proc[i][0]+ "\t\t" + proc[i][2] + "\t\t" + proc[i][3]);
+			System.out.println();
 		}
 
+		System.out.println();
 
-		//Calculating Average waiting time
-		wait_avg=(float)total/n;
-		total=0;
-
-		System.out.println("\nProcess\t Burst Time \tWaiting Time\tTurnaround Time");
-		for(i=0;i<n;i++)
+		//Printing the average WT & TT
+		float WT = 0,TT = 0;
+		for(int i = 1; i <= n; i++)
 		{
-			tat[i]=burst_time[i]+waiting_time[i]; //Calculating Turnaround Time
-			total+=tat[i];
-			System.out.println("\n p"+process[i]+"\t\t "+burst_time[i]+"\t\t "+waiting_time[i]+"\t\t "+tat[i]);
+			WT += proc[i][2];
+			TT += proc[i][3];
 		}
-
-		//Calculation of Average Turnaround Time
-		TAT_avg=(float)total/n;
-		System.out.println("\n\nAverage Waiting Time: "+wait_avg);
-		System.out.println("\nAverage Turnaround Time: "+TAT_avg);
-
+		WT /= n;
+		TT /= n;
+		System.out.println("The Average Waiting Time is: " + WT);
+		System.out.println("The Average Turnaround Time is: " + TT);
 	}
+
 }
